@@ -16,15 +16,15 @@ class Ssh extends AbstractSsh
         $this
             ->setName('ssh')
             ->addArgument(
-                'command',
+                'exec',
                 InputArgument::REQUIRED,
-                'Command to execute'
+                'execute command'
             )
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->write($this->bridge->ssh()->exec($input->getArgument('command')));
+        $output->write($this->bridge->ssh()->exec($input->getArgument('exec')));
     }
 }
