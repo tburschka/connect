@@ -2,10 +2,10 @@
 
 namespace Connect;
 
-use Connect\Command\Scp;
-use Connect\Command\SelfUpdate;
-use Connect\Command\Sftp;
-use Connect\Command\Ssh;
+use Connect\Command\ScpCommand;
+use Connect\Command\SelfUpdateCommand;
+use Connect\Command\SftpCommand;
+use Connect\Command\SshCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -25,10 +25,10 @@ class Connect extends Application
     protected function getDefaultCommands()
     {
         $defaultCommands = parent::getDefaultCommands();
-        $defaultCommands[] = new Scp();
-        $defaultCommands[] = new Sftp();
-        $defaultCommands[] = new Ssh();
-        $defaultCommands[] = new SelfUpdate();
+        $defaultCommands[] = new ScpCommand();
+        $defaultCommands[] = new SftpCommand();
+        $defaultCommands[] = new SshCommand();
+        $defaultCommands[] = new SelfUpdateCommand();
         return $defaultCommands;
     }
 }

@@ -8,15 +8,23 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class Sftp extends AbstractSsh
+class SshCommand extends AbstractSshCommand
 {
     protected function configure()
     {
         parent::configure();
-        $this->setName('sftp');
+        $this
+            ->setName('ssh')
+            ->addArgument(
+                'exec',
+                InputArgument::REQUIRED,
+                'execute command'
+            )
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $output->write($this->bridge->ssh()->exec($input->getArgument('exec')));
     }
 }

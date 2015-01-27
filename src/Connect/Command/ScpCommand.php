@@ -10,48 +10,22 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class Scp extends AbstractSsh
+class ScpCommand extends AbstractSshCommand
 {
 
     const NET_SCP_LOCAL_FILE = 1;
     const NET_SCP_STRING = 2;
-
 
     protected function configure()
     {
         parent::configure();
         $this
             ->setName('scp')
-            ->addArgument(
-                'method',
-                InputArgument::REQUIRED,
-                '"get" or "put" a file'
-            )
-            ->addOption(
-                'localfile',
-                null,
-                InputOption::VALUE_REQUIRED,
-                'Full local filename and path'
-            )
-            ->addOption(
-                'remotefile',
-                null,
-                InputOption::VALUE_REQUIRED,
-                'Full local filename and path'
-            )
-            ->addOption(
-                'mode',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'mode to transfer the file (in most cases file should work, else choose string)',
-                'file'
-            )
-            ->addOption(
-                'no-progress',
-                null,
-                InputOption::VALUE_NONE,
-                'Show no progress bar'
-            )
+            ->addArgument('method', InputArgument::REQUIRED, '"get" or "put" a file')
+            ->addOption('localfile', null, InputOption::VALUE_REQUIRED, 'Full local filename and path')
+            ->addOption('remotefile', null, InputOption::VALUE_REQUIRED, 'Full local filename and path')
+            ->addOption('mode', null, InputOption::VALUE_OPTIONAL, 'mode to transfer the file (in most cases file should work, else choose string)', 'file')
+            ->addOption('no-progress', null, InputOption::VALUE_NONE, 'Hide progress bar')
         ;
     }
 
@@ -77,7 +51,7 @@ class Scp extends AbstractSsh
             }
 
             // init progressbar
-            if ($input->hasOption('no-progress')) {
+            if ($input->getOption('no-progress')) {
                 $progess = new ProgressBar(new NullOutput());
             } else {
                 $progess = new ProgressBar($output, $size);
@@ -93,10 +67,13 @@ class Scp extends AbstractSsh
                 }
             );
 
+            if ($input->getOption('no-progress')) {
+                $output->writeln('');
+            }
             if ($result) {
-                $output->writeln('Success');
+                $output->writeln('Successful transferred "' . $input->getOption('localfile') . '" to "' . $input->getOption('remotefile') . '"');
             } else {
-                $output->writeln('Failed');
+                $output->writeln('Failed to transfer "' . $input->getOption('localfile') . '" to "' . $input->getOption('remotefile') . '"');
             }
         }
     }
