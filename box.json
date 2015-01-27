@@ -1,0 +1,20 @@
+{
+    "algorithm": "SHA256",
+    "alias": "connect.phar",
+    "chmod": "0755",
+    "directories": ["src"],
+    "blacklist": [
+        "vendor/gitonomy/gitlib/composer.json"
+    ],
+    "finder": [
+        {
+            "name": ["*.php", "openssl.cnf"],
+            "exclude": ["tests", "build"],
+            "in": "vendor"
+        }
+    ],
+    "compression": "BZ2",
+    "main": "src/bootstrap.php",
+    "output": "connect.phar",
+    "stub": true
+}

@@ -1,0 +1,33 @@
+{
+    "name": "tburschka/connect",
+    "description": "connect",
+    "license": "MIT",
+    "keywords": [
+        "connect", "phpseclib"
+    ],
+    "homepage": "https://github.com/tburschka/connect",
+    "require": {
+        "php": ">=5.3",
+        "phpseclib/phpseclib": "~0.3",
+        "symfony/console": "~2.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "pdepend/pdepend": "*",
+        "phploc/phploc": "*",
+        "phpmd/phpmd": "*",
+        "sebastian/phpcpd": "*",
+        "theseer/phpdox": "*",
+        "squizlabs/php_codesniffer": "1.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Connect\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "Connect\\": "tests/"
+        }
+    }
+}
