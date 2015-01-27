@@ -3,6 +3,7 @@
 namespace Connect;
 
 use Connect\Command\Scp;
+use Connect\Command\SelfUpdate;
 use Connect\Command\Sftp;
 use Connect\Command\Ssh;
 use Symfony\Component\Console\Application;
@@ -27,6 +28,7 @@ class Connect extends Application
         $defaultCommands[] = new Scp();
         $defaultCommands[] = new Sftp();
         $defaultCommands[] = new Ssh();
+        $defaultCommands[] = new SelfUpdate();
         return $defaultCommands;
     }
 }
