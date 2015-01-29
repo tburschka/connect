@@ -85,11 +85,11 @@ class AbstractSshCommand extends Command
         $this->bridge->setTimeout($input->getOption('timeout'));
         $this->bridge->setUsername($input->getOption('username'));
 
-        if ($input->hasOption('password')) {
+        if ($input->getOption('password')) {
             $this->bridge->setPassword($input->getOption('password'));
         }
 
-        if ($input->hasOption('keyfile')) {
+        if ($input->getOption('keyfile')) {
             $this->bridge->setAuth(Bridge::AUTH_KEYFILE);
             $this->bridge->setKeyfile($input->getOption('keyfile'));
         } else {
