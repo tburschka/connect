@@ -1,5 +1,7 @@
 <?php
 
+namespace Connect\Exception;
+
 class FilesystemException extends \Exception
 {
 

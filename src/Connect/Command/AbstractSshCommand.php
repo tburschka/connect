@@ -68,7 +68,7 @@ class AbstractSshCommand extends Command
      */
     protected function getUser()
     {
-        if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN' || extension_loaded('posix')) {
+        if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN' && extension_loaded('posix')) {
             $processUser = posix_getpwuid(posix_geteuid());
             return $processUser['name'];
         } else {

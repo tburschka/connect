@@ -13,5 +13,5 @@ spl_autoload_register(function ($class) {
     require_once $class . '.php';
 });
 
-$connect = new Connect\Connect('PHPerform', '0.1-dev');
+$connect = new Connect\Connect('Connect', '0.1-dev');
 $connect->run();
