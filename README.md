@@ -21,3 +21,6 @@ Make the connect.phar executable and run
 
 currently not working
 
+## Build
+
+use ./box.phar build

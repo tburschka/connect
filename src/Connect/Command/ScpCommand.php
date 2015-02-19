@@ -67,7 +67,7 @@ class ScpCommand extends AbstractSshCommand
                 }
             );
 
-            if ($input->getOption('no-progress')) {
+            if (!$input->getOption('no-progress')) {
                 $output->writeln('');
             }
             if ($result) {

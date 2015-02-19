@@ -36,7 +36,7 @@ EOT
         if ($input->getOption('rollback')) {
             return $this->rollback($output, $connectPath, $localFilename);
         } else {
-            $baseUrl = 'https://github.com/tburschka/connect/raw/master/';
+            $baseUrl = 'https://raw.githubusercontent.com/tburschka/connect/master/';
             $latestFile = @file_get_contents($baseUrl . $phar . '.sha256');
             $latestHash = substr($latestFile, 0, 64);
             $hash = hash_file('sha256', $localFilename);
