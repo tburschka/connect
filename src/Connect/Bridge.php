@@ -44,6 +44,11 @@ class Bridge
     /**
      * @var string
      */
+    protected $passwordFile = null;
+
+    /**
+     * @var string
+     */
     protected $keyfile = null;
 
     /**
@@ -108,6 +113,14 @@ class Bridge
     }
 
     /**
+     * @param string $passwordFile
+     */
+    public function setPasswordfile($passwordFile)
+    {
+        $this->passwordFile = $passwordFile;
+    }
+
+    /**
      * @param string $keyfile
      */
     public function setKeyfile($keyfile)
@@ -147,6 +160,42 @@ class Bridge
     }
 
     /**
+     * @return string
+     */
+    protected function getKeyfile()
+    {
+        return file_get_contents($this->getRealPath($this->keyfile));
+    }
+
+
+    /**
+     * @return string
+     */
+    protected function getPassword()
+    {
+        if ($this->passwordFile) {
+            $password = trim(file_get_contents($this->getRealPath($this->passwordFile)), "\t\n\r\0\x0B");
+        } else {
+            $password = $this->password;
+        }
+        return $password;
+    }
+
+    /**
+     * fixes home path notation
+     *
+     * @param string $file
+     * @return string
+     */
+    protected function getRealPath($file)
+    {
+        if (isset($file) && '~' === $file{0}) {
+            $file = getenv('HOME') . substr($file, 1);
+        }
+        return $file;
+    }
+
+    /**
      * @param \Net_SSH2|\Net_SFTP $connector
      * @return \Net_SSH2|\Net_SFTP
      * @throws \Exception
@@ -156,25 +205,18 @@ class Bridge
         switch ($this->auth) {
             case self::AUTH_KEYFILE:
                 $password = new \Crypt_RSA();
-                if (!is_null($this->password)) {
-                    $password->setPassword($this->password);
+                if (!is_null($this->getPassword())) {
+                    $password->setPassword($this->getPassword());
                 }
-
-                // fixes home path notation
-                if ($this->keyfile{0} === '~') {
-                    $keyfile = getenv('HOME') . substr($this->keyfile, 1);
-                } else {
-                    $keyfile = $this->keyfile;
-                }
-
-                $password->loadKey(file_get_contents($keyfile));
+                $password->loadKey($this->getKeyfile());
                 break;
             case self::AUTH_PASSWORD:
+                $password = $this->getPassword();
+                break;
             default:
-                $password = $this->password;
                 break;
         }
-        if (is_null($password)) {
+        if (!isset($password)) {
             $loggedIn = $connector->login($this->username);
         } else {
             $loggedIn = $connector->login($this->username, $password);

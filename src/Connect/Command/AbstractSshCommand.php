@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 
 class AbstractSshCommand extends Command
 {
@@ -49,8 +50,14 @@ class AbstractSshCommand extends Command
             ->addOption(
                 'password',
                 null,
+                InputOption::VALUE_NONE,
+                'Password or passphrase (optional)'
+            )
+            ->addOption(
+                'passwordfile',
+                null,
                 InputOption::VALUE_OPTIONAL,
-                'Password or Passphrase (optional)'
+                'Password or passphrase stored in a file (optional)'
             )
             ->addOption(
                 'keyfile',
@@ -58,7 +65,6 @@ class AbstractSshCommand extends Command
                 InputOption::VALUE_OPTIONAL,
                 'Keyfile for connection (optional)'
             )
-
         ;
     }
 
@@ -76,6 +82,18 @@ class AbstractSshCommand extends Command
         }
     }
 
+    protected function interact(InputInterface $input, OutputInterface $output)
+    {
+        if ($input->getOption('password')) {
+            $helper = $this->getHelper('question');
+            $question = new Question('Enter your password/passphrase: ');
+            $question->setHidden(true);
+            $question->setHiddenFallback(true);
+            $password = $helper->ask($input, $output, $question);
+            $this->bridge->setPassword($password);
+        }
+    }
+
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->bridge = new Bridge($output);
@@ -86,14 +104,17 @@ class AbstractSshCommand extends Command
         $this->bridge->setUsername($input->getOption('username'));
 
         if ($input->getOption('password')) {
-            $this->bridge->setPassword($input->getOption('password'));
+            $this->bridge->setAuth(Bridge::AUTH_PASSWORD);
+        }
+
+        if ($input->getOption('passwordfile')) {
+            $this->bridge->setAuth(Bridge::AUTH_PASSWORD);
+            $this->bridge->setPasswordfile($input->getOption('passwordfile'));
         }
 
         if ($input->getOption('keyfile')) {
             $this->bridge->setAuth(Bridge::AUTH_KEYFILE);
             $this->bridge->setKeyfile($input->getOption('keyfile'));
-        } else {
-            $this->bridge->setAuth(Bridge::AUTH_PASSWORD);
         }
     }
 }
