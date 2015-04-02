@@ -1,13 +1,11 @@
 <?php
 
-
 namespace Connect;
 
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Bridge
 {
-
     const AUTH_PASSWORD = 'password';
     const AUTH_KEYFILE = 'keyfile';
 

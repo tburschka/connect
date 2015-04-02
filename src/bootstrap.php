@@ -1,9 +1,9 @@
 <?php
 
-// vendor autoloader
+// vendor autoload
 require_once __DIR__ . '/../vendor/autoload.php';
 
-// phperform autoloader
+// phperform autoload
 spl_autoload_extensions('.php');
 spl_autoload_register(function ($class) {
     if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {

@@ -2,8 +2,8 @@
 
 namespace Connect\Command;
 
+use Connect\Exception\FilesystemException;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -61,10 +61,10 @@ EOT
             throw new \UnexpectedValueException('Connect rollback failed: no installation to roll back to in "' . $rollbackDir . '"');
         }
         if (!is_readable($rollbackFilename)) {
-            throw new \FilesystemException('Connect rollback failed: "' . $rollbackFilename . '" could not be read');
+            throw new FilesystemException('Connect rollback failed: "' . $rollbackFilename . '" could not be read');
         }
         if (!is_writeable($localFilename) || !copy($rollbackFilename, $localFilename)) {
-            throw new \FilesystemException('Connect rollback failed: "' . $localFilename . '" could not be written to');
+            throw new FilesystemException('Connect rollback failed: "' . $localFilename . '" could not be written to');
         }
         $output->writeln('Successful reverted to previous version');
         return 0;
