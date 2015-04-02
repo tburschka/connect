@@ -3,9 +3,7 @@
     "alias": "connect.phar",
     "chmod": "0755",
     "directories": ["src"],
-    "blacklist": [
-        "vendor/gitonomy/gitlib/composer.json"
-    ],
+    "blacklist": [],
     "finder": [
         {
             "name": ["*.php", "openssl.cnf"],
