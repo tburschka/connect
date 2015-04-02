@@ -3,7 +3,11 @@
     "description": "connect",
     "license": "MIT",
     "keywords": [
-        "connect", "phpseclib"
+        "php",
+        "connect",
+        "phpseclib",
+        "ssh",
+        "scp"
     ],
     "homepage": "https://github.com/tburschka/connect",
     "require": {
