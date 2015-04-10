@@ -24,6 +24,8 @@ class SshCommand extends AbstractSshCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // TODO: remove suppress as soon as https://github.com/phpseclib/phpseclib/issues/478 is solved
-        $output->write(@$this->bridge->ssh()->exec($input->getArgument('exec')));
+        @$this->bridge->ssh()->exec($input->getArgument('exec'), function ($data) use ($output) {
+            $output->write($data);
+        });
     }
 }
