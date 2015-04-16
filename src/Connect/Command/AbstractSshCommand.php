@@ -2,7 +2,7 @@
 
 namespace Connect\Command;
 
-use Connect\Bridge;
+use phpseclibBridge\Bridge;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -95,8 +95,7 @@ class AbstractSshCommand extends Command
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->bridge = new Bridge($output);
-
+        $this->bridge = new Bridge();
         $this->bridge->setHostname($input->getOption('hostname'));
         $this->bridge->setPort($input->getOption('port'));
         $this->bridge->setTimeout($input->getOption('timeout'));
