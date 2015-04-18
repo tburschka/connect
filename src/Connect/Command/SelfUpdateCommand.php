@@ -10,6 +10,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SelfUpdateCommand extends Command
 {
+
+    /**
+     * Configure self update
+     */
     protected function configure()
     {
         $this
@@ -26,6 +30,14 @@ EOT
         ;
     }
 
+    /**
+     * Execute self update/rollback
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     * @throws FilesystemException
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $connectPath = $_SERVER['HOME'] . '/.connect';
@@ -52,8 +64,17 @@ EOT
                 $output->writeln('You already have the latest version');
             }
         }
+        return 0;
     }
 
+    /**
+     * Rollback to a previous version if possible
+     * @param OutputInterface $output
+     * @param string $rollbackDir
+     * @param string $localFilename
+     * @return int
+     * @throws FilesystemException
+     */
     protected function rollback(OutputInterface $output, $rollbackDir, $localFilename)
     {
         $rollbackFilename = $rollbackDir . '/backup/connect.phar';

@@ -21,11 +21,18 @@ class SshCommand extends AbstractSshCommand
         ;
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return integer
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $ssh =$this->bridge->ssh();
         // TODO: remove suppress as soon as https://github.com/phpseclib/phpseclib/issues/478 is solved
-        @$this->bridge->ssh()->exec($input->getArgument('exec'), function ($data) use ($output) {
+        @$ssh->exec($input->getArgument('exec'), function ($data) use ($output) {
             $output->write($data);
         });
+        return intval(trim(@$ssh->exec('echo $?')));
     }
 }

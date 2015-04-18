@@ -15,6 +15,9 @@ class ScpCommand extends AbstractSshCommand
     const NET_SCP_LOCAL_FILE = 1;
     const NET_SCP_STRING = 2;
 
+    /**
+     * Configure SCP options
+     */
     protected function configure()
     {
         parent::configure();
@@ -28,6 +31,12 @@ class ScpCommand extends AbstractSshCommand
         ;
     }
 
+    /**
+     * Execute scp command
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return integer
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $method = $input->getArgument('method');
@@ -62,7 +71,7 @@ class ScpCommand extends AbstractSshCommand
                 $localfile,
                 $mode,
                 function ($sent) use ($progess) {
-                    $progess->setCurrent($sent);
+                    $progess->setProgress($sent);
                 }
             );
 
@@ -71,8 +80,10 @@ class ScpCommand extends AbstractSshCommand
             }
             if ($result) {
                 $output->writeln('Successful transferred "' . $input->getOption('localfile') . '" to "' . $input->getOption('remotefile') . '"');
+                return 0;
             } else {
                 $output->writeln('Failed to transfer "' . $input->getOption('localfile') . '" to "' . $input->getOption('remotefile') . '"');
+                return 1;
             }
         }
     }

@@ -15,5 +15,7 @@ class SftpCommand extends AbstractSshCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $output->setVerbosity(OutputInterface::VERBOSITY_QUIET);
+        $output->writeln('SFTP IS CURRENTLY A DUMMY!');
     }
 }

@@ -11,11 +11,15 @@ use Symfony\Component\Console\Question\Question;
 
 class AbstractSshCommand extends Command
 {
+
     /**
      * @var Bridge
      */
     protected $bridge;
 
+    /**
+     * Configure default SSH options
+     */
     protected function configure()
     {
         $this
@@ -81,6 +85,11 @@ class AbstractSshCommand extends Command
         }
     }
 
+    /**
+     * Interact with the user to ask for password
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         if ($input->getOption('password')) {
@@ -93,6 +102,11 @@ class AbstractSshCommand extends Command
         }
     }
 
+    /**
+     * Initialize the bridge with given console options
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->bridge = new Bridge();
