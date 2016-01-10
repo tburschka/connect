@@ -34,14 +34,14 @@ class AbstractSshCommand extends Command
                 null,
                 InputOption::VALUE_OPTIONAL,
                 'Port for connection',
-                22
+                Bridge::DEFAULT_PORT
             )
             ->addOption(
                 'timeout',
                 null,
                 InputOption::VALUE_OPTIONAL,
                 'Timeout in seconds for connection (optional)',
-                10
+                Bridge::DEFAULT_TIMEOUT
             )
             ->addOption(
                 'username',
@@ -94,7 +94,12 @@ class AbstractSshCommand extends Command
     {
         if ($input->getOption('password')) {
             $helper = $this->getHelper('question');
-            $question = new Question('Enter your password/passphrase: ');
+            if ($input->getOption('keyfile')) {
+                $type = 'passphrase';
+            } else {
+                $type = 'password';
+            }
+            $question = new Question("Enter your $type: ");
             $question->setHidden(true);
             $question->setHiddenFallback(true);
             $password = $helper->ask($input, $output, $question);

@@ -37,11 +37,11 @@ Or if you don't have curl:
 
 Run this in your terminal to download a ready-to-use version of Box as a Phar:
 
-    curl -LSs http://box-project.org/installer.php | php
+     curl -LSs https://box-project.github.io/box2/installer.php | php
 
 Or if you don't have curl:
 
-    php -r "readfile('http://box-project.org/installer.php');" | php
+    php -r "readfile('https://box-project.github.io/box2/installer.php');" | php
 
 ### Install Dependency
 

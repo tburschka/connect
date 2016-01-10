@@ -23,11 +23,36 @@ class ScpCommand extends AbstractSshCommand
         parent::configure();
         $this
             ->setName('scp')
-            ->addArgument('method', InputArgument::REQUIRED, '"get" or "put" a file')
-            ->addOption('localfile', null, InputOption::VALUE_REQUIRED, 'Full local filename and path')
-            ->addOption('remotefile', null, InputOption::VALUE_REQUIRED, 'Full local filename and path')
-            ->addOption('mode', null, InputOption::VALUE_OPTIONAL, 'mode to transfer the file (in most cases file should work, else choose string)', 'file')
-            ->addOption('no-progress', null, InputOption::VALUE_NONE, 'Hide progress bar')
+            ->addArgument(
+                'method',
+                InputArgument::REQUIRED,
+                '"get" or "put" a file'
+            )
+            ->addOption(
+                'localfile',
+                'lf',
+                InputOption::VALUE_REQUIRED,
+                'Full local filename and path'
+            )
+            ->addOption(
+                'remotefile',
+                'rf',
+                InputOption::VALUE_REQUIRED,
+                'Full local filename and path'
+            )
+            ->addOption(
+                'mode',
+                'm',
+                InputOption::VALUE_OPTIONAL,
+                'mode to transfer the file (in most cases file should work, else choose string)',
+                'file'
+            )
+            ->addOption(
+                'no-progress',
+                'n',
+                InputOption::VALUE_NONE,
+                'Hide progress bar'
+            )
         ;
     }
 

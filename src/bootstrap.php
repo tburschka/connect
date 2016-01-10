@@ -1,17 +1,6 @@
 <?php
 
-// vendor autoload
 require_once __DIR__ . '/../vendor/autoload.php';
 
-// phperform autoload
-spl_autoload_extensions('.php');
-spl_autoload_register(function ($class) {
-    if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
-        $class = str_replace('\\', '/', $class);
-    }
-    /** @noinspection PhpIncludeInspection */
-    require_once $class . '.php';
-});
-
-$connect = new Connect\Connect('Connect', '0.1-dev');
+$connect = new Connect\Connect('Connect', '0.2.0');
 $connect->run();
