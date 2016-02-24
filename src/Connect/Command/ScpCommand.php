@@ -30,26 +30,26 @@ class ScpCommand extends AbstractSshCommand
             )
             ->addOption(
                 'localfile',
-                'lf',
+                null,
                 InputOption::VALUE_REQUIRED,
                 'Full local filename and path'
             )
             ->addOption(
                 'remotefile',
-                'rf',
+                null,
                 InputOption::VALUE_REQUIRED,
                 'Full local filename and path'
             )
             ->addOption(
                 'mode',
-                'm',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 'mode to transfer the file (in most cases file should work, else choose string)',
                 'file'
             )
             ->addOption(
                 'no-progress',
-                'n',
+                null,
                 InputOption::VALUE_NONE,
                 'Hide progress bar'
             )

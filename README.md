@@ -17,10 +17,6 @@ Make the connect.phar executable and run
 
 #### scp
 
-#### sftp
-
-currently not working
-
 ## Build
 
 ### Download Composer
