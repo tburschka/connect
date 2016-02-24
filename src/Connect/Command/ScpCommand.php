@@ -85,9 +85,9 @@ class ScpCommand extends AbstractSshCommand
 
             // init progressbar
             if ($input->getOption('no-progress')) {
-                $progess = new ProgressBar(new NullOutput());
+                $progress = new ProgressBar(new NullOutput());
             } else {
-                $progess = new ProgressBar($output, $size);
+                $progress = new ProgressBar($output, $size);
             }
 
             // transfer file
@@ -95,12 +95,13 @@ class ScpCommand extends AbstractSshCommand
                 $input->getOption('remotefile'),
                 $localfile,
                 $mode,
-                function ($sent) use ($progess) {
-                    $progess->setProgress($sent);
+                function ($sent) use ($progress) {
+                    $progress->setProgress($sent);
                 }
             );
 
             if (!$input->getOption('no-progress')) {
+                $progress->finish();
                 $output->writeln('');
             }
             if ($result) {
